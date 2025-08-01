@@ -6,6 +6,7 @@ import {
   updateUserRoute,
   deleteUserRoute
 } from './routes/users'
+import { protectedRoutes } from './routes/protected'
 
 
 const app = new Elysia()
@@ -16,6 +17,7 @@ app
   .get(getUserByIdRoute.path, getUserByIdRoute.handler)
   .put(updateUserRoute.path, updateUserRoute.handler, { body: updateUserRoute.body })
   .delete(deleteUserRoute.path, deleteUserRoute.handler)
+  .use(protectedRoutes) 
 
 app.listen(3000)
 console.log('🚀 Server läuft auf http://localhost:3000')
