@@ -1,7 +1,6 @@
-import { Elysia } from 'elysia'
-import { t, type Static } from 'elysia'
-import { db } from '../db'
+import { Elysia, t, type Static } from 'elysia'
 import bcrypt from 'bcryptjs'
+import { db } from '../lib/db'
 
 const RegisterBody = t.Object({
   email: t.String({ format: 'email' }),
@@ -15,9 +14,8 @@ const LoginBody = t.Object({
 })
 type LoginInput = Static<typeof LoginBody>
 
-export const routes = new Elysia()
+export const authRoutes = new Elysia()
 
-  // Registrierung
   .post('/auth/register', async ({ body, set }) => {
     const input = body as RegisterInput
     const existing = await db('auth_users').where('email', input.email).first()
@@ -33,11 +31,8 @@ export const routes = new Elysia()
       .returning(['id', 'email', 'created_at'])
 
     return user
-  }, {
-    body: RegisterBody
-  })
+  }, { body: RegisterBody })
 
-  // Login
   .post('/auth/login', async ({ body, set }) => {
     const input = body as LoginInput
     const user = await db('auth_users').where('email', input.email).first()
@@ -52,6 +47,4 @@ export const routes = new Elysia()
       email: user.email,
       created_at: user.created_at
     }
-  }, {
-    body: LoginBody
-  })
+  }, { body: LoginBody })

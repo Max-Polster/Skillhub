@@ -4,17 +4,25 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/dotenv": "^6.1.1",
+    "ts-node": "^10.9.2"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "bun": "^1.2.18",
+    "dotenv": "^17.2.1",
     "elysia": "^1.3.5",
     "jose": "^6.0.12",
     "knex": "^3.1.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "zod": "^4.0.14"
+  },
+  "scripts": {
+    "migrate": "bunx knex --esm --tsconfig tsconfig.knex.json --knexfile knexfile.ts migrate:latest",
+    "migrate:make": "bunx knex --esm --tsconfig tsconfig.knex.json --knexfile knexfile.ts migrate:make"
   }
 }
